@@ -40,7 +40,7 @@ module Sorted
       array.inject({}){|h,a| h.merge(Hash[a[0],a[1]])}
     end
 
-    def to_sql(quoter = ->(frag) { frag })
+    def to_sql(quoter = Proc.new {|frag| frag })
       array.map do |a|
         column = a[0].split('.').map{ |frag| quoter.call(frag) }.join('.')
         "#{column} #{a[1].upcase}"
